@@ -1,4 +1,4 @@
-package EX1;
+package Ex1;
 
 public class ComplexFunction implements complex_function {
     @Override

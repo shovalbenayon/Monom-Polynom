@@ -1,4 +1,4 @@
-package EX1;
+package Ex1;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -89,4 +89,6 @@ public class Functions_GUI implements functions {
     public void clear() {
 
     }
+
+
 }

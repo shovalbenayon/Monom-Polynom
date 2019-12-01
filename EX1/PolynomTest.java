@@ -1,4 +1,7 @@
-package EX1;
+package Ex1;
+
+import Ex1.Monom;
+import Ex1.Polynom;
 
 public class PolynomTest {
 	public static void main(String[] args) {
