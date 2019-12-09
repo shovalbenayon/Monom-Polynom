@@ -151,9 +151,9 @@ public class Monom implements function{
 		String ans = "";
 		if (this.get_coefficient() == 1)
 			if (this.get_power() == 1)
-				ans += "x";
+				ans += "1.0x";
 			else if (this.get_power() == 0)
-				ans += "1";
+				ans += "1.0";
 			else
 				ans += "x^" + get_power();
 		else if (this.get_coefficient() == 0)
@@ -162,9 +162,9 @@ public class Monom implements function{
 			if (this.get_power() == 1 )
 				ans += "-1.0x";
 			else if ( this.get_power() == 0)
-				ans += "-1";
+				ans += "-1.0";
 			else
-				ans += "-x^" + this.get_power();
+				ans += "-1.0x^" + this.get_power();
 		else if (this.get_power() == 1)
 			ans += this.get_coefficient() + "x";
 		else if (this.get_power() == 0)

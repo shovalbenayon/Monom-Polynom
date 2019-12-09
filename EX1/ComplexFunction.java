@@ -95,18 +95,26 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be added to this complex_function.
      */
     public void plus(function f1) {
-            if(this.getOp() == Operation.None) {
+        /**
+         * if there isn't operation it means that we have only left function and then the new function will
+         * get in the right side
+         */
+        if(this.getOp() == Operation.None) {
                 this.right = f1;
                 this.op = Operation.Plus;
-            }
-            if(this.getOp() != Operation.Error){
-                this.left = new ComplexFunction(this);
-                this.right = f1;
-                this.op = Operation.Plus;
-            }
-            else{
-                throw new RuntimeException("ERR: operation is error");
-            }
+        }
+        /**
+         * if the operation isn't error or none the algorithm will build new left function with the
+         * existing function and adding the new one to the right
+         */
+        if(this.getOp() != Operation.Error){
+            this.left = new ComplexFunction(this);
+            this.right = f1;
+            this.op = Operation.Plus;
+        }
+        else{
+            throw new RuntimeException("ERR: operation is error");
+        }
     }
 
     /**
@@ -116,10 +124,18 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be multiply be this complex_function.
      */
     public void mul(function f1) {
+        /**
+         * if there isn't operation it means that we have only left function and then the new function will
+         * get in the right side
+         */
         if(this.getOp() == Operation.None) {
             this.right = f1;
             this.op = Operation.Times;
         }
+        /**
+         * if the operation isn't error or none the algorithm will build new left function with the
+         * existing function and adding the new one to the right
+         */
         if(this.getOp() != Operation.Error){
             this.left = new ComplexFunction(this);
             this.right = f1;
@@ -137,10 +153,18 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be divide be this complex_function.
      */
     public void div(function f1) {
+        /**
+         * if there isn't operation it means that we have only left function and then the new function will
+         * get in the right side
+         */
         if(this.getOp() == Operation.None) {
             this.right = f1;
             this.op = Operation.Divid;
         }
+        /**
+         * if the operation isn't error or none the algorithm will build new left function with the
+         * existing function and adding the new one to the right
+         */
         if(this.getOp() != Operation.Error){
             this.left = new ComplexFunction(this);
             this.right = f1;
@@ -158,10 +182,18 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be compared with this complex_function - to compute the maximum.
      */
     public void max(function f1) {
+        /**
+         * if there isn't operation it means that we have only left function and then the new function will
+         * get in the right side
+         */
         if(this.getOp() == Operation.None) {
             this.right = f1;
             this.op = Operation.Max;
         }
+        /**
+         * if the operation isn't error or none the algorithm will build new left function with the
+         * existing function and adding the new one to the right
+         */
         if(this.getOp() != Operation.Error){
             this.left = new ComplexFunction(this);
             this.right = f1;
@@ -180,10 +212,18 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be compared with this complex_function - to compute the minimum.
      */
     public void min(function f1) {
+        /**
+         * if there isn't operation it means that we have only left function and then the new function will
+         * get in the right side
+         */
         if(this.getOp() == Operation.None) {
             this.right = f1;
             this.op = Operation.Min;
         }
+        /**
+         * if the operation isn't error or none the algorithm will build new left function with the
+         * existing function and adding the new one to the right
+         */
         if(this.getOp() != Operation.Error){
             this.left = new ComplexFunction(this);
             this.right = f1;
@@ -201,10 +241,18 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function
      */
     public void comp(function f1) {
+        /**
+         * if there isn't operation it means that we have only left function and then the new function will
+         * get in the right side
+         */
         if(this.getOp() == Operation.None) {
             this.right = f1;
             this.op = Operation.Comp;
         }
+        /**
+         * if the operation isn't error or none the algorithm will build new left function with the
+         * existing function and adding the new one to the right
+         */
         if(this.getOp() != Operation.Error){
             this.left = new ComplexFunction(this);
             this.right = f1;
@@ -293,52 +341,51 @@ public class ComplexFunction implements complex_function {
                     return 0;
             }
     }
-
     /**
-     *
-     * @param s
-     * @return
+     * This static function returns the index of main operation (over *,-,+),
+     * in case of an invalid from returns -1;
+     * taken from boaz github
+     * @param s: represents a form
+     * @return the index of the main oparatiopn (-1 if none).
      */
-    public function initFromString(String s) {
-        if (!IsBalanced(s)){
-            throw new RuntimeException("ERR: can't build complex function, parentheses is not balanced");
-        }
-        StringBuilder op = new StringBuilder();
-        for (int i = 0; i < s.length() ; i++) {
-
-        }
-    }
-
-    public boolean isMatchingPair(char character1, char character2)
-    {
-        if (character1 == '(' && character2 == ')')
-            return true;
-        else
-            return false;
-    }
-
-    public boolean IsBalanced(String s) {
-        Stack st=new Stack();
-        for(int i=0;i<s.length();i++) {
-            if (s.charAt(i) == '(')
-                st.push(s.charAt(i));
-
-            if (s.charAt(i) == ')' ) {
-                if (st.isEmpty()) {
-                    return false;
-                }
-
-                else if ( !isMatchingPair((Character) st.pop(), s.charAt(i)) ) {
-                    return false;
-                }
+    public static int main_co(String s) {
+        int ans = -1;
+        int c = 0;
+        for(int i = 0; i < s.length() ; i++) {
+            char ch = s.charAt(i);
+            if(ch == '(') {c++;}
+            if(ch == ')') {c--;}
+            if(ch == ',' && c == 0) {
+                ans = i;
             }
         }
+        return ans;
+    }
 
-        if (st.isEmpty())
-            return true;
-        else {
-            return false;
+    /**
+     *init a complex function from string
+     * the function works recursive and simplify the string until we get polynom and then
+     * the algorithm going up and gives as the whole function
+     * @param s - the receiving string
+     * @return function that represent the string
+     */
+    public function initFromString(String s) {
+
+        function ans = null;
+        int find = s.indexOf('(');
+        String op = s.substring(0 , find + 1);
+        if (find >= 0 && !op.isEmpty()){
+            int comma_at = main_co(s.substring(op.length() , s.length() -1));
+            function leftf = initFromString(s.substring(op.length() , comma_at + op.length()));
+            function rightf = initFromString(s.substring(op.length() + comma_at + 1 , s.length()-1));
+            op = s.substring(0 , op.length() - 1);
+            ans = new ComplexFunction(op , leftf , rightf);
         }
+        else{
+            function temp = new Polynom();
+            ans = temp.initFromString(s);
+        }
+        return ans;
     }
 
     /**
