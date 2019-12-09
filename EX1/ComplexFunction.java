@@ -372,7 +372,7 @@ public class ComplexFunction implements complex_function {
      * @return function that represent the string
      */
     public function initFromString(String s) {
-
+        s = s.replaceAll("\\s", "");
         function ans = null;
         int find = s.indexOf('(');
         String op = s.substring(0 , find + 1);

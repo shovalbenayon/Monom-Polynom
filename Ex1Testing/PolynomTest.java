@@ -156,7 +156,7 @@ public class PolynomTest {
         for (int i = 0 ; i < mon.length ; i++) {
             init.initFromString(mon[i]);
         }
-        Polynom initstring = new Polynom("4.678x^8-1.0x^7-9x^1+0+1.0x^0");
+        Polynom initstring = new Polynom("4.678x^8   -1.0x^7-9x^1+0+1.0x^0");
         assertEquals(init , initstring);
         function f = new ComplexFunction();
         s = "4.678x^8-1.0x^7-9x^1+0+1.0x^0";

@@ -27,6 +27,7 @@ public class Polynom implements Polynom_able{
 	 * @param s: is a string represents a Polynom
 	 */
 	public Polynom(String s) {
+		s = s.replaceAll("\\s", "");
 		String temp = "";
 		int start = 0  ;
 		Monom constarctor;
@@ -68,6 +69,7 @@ public class Polynom implements Polynom_able{
 
 	@Override
 	public function initFromString(String s) {
+		s = s.replaceAll("\\s", "");
 		function new_func = new Polynom(s);
 		return new_func;
 	}

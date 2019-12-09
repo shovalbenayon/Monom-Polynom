@@ -259,5 +259,5 @@ public class ComplexFunctionTest {
         assertEquals(f2, f2_copy);
 
     }
-    
+
 }
