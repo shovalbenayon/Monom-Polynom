@@ -174,9 +174,10 @@ public class Monom implements function{
 		return ans;
 	}
 
-	@Override
+
 	public function initFromString(String s) {
-		return null;
+		function newfunc = new Monom(s);
+		return newfunc;
 	}
 
 	public void set_coefficient(double a){
@@ -210,11 +211,13 @@ public class Monom implements function{
 	 * @param m1 - new monom to check if equal
 	 * @return true if equal
 	 */
-	public boolean equals(Monom m1){
-		if (m1.get_coefficient() == this.get_coefficient() && m1.get_power() == this.get_power())
-			return true;
-		if (Math.abs(m1.get_coefficient() - this.get_coefficient()) <= EPSILON )
-			return true;
+	public boolean equals(Object m1){
+		if (m1 instanceof Monom) {
+			if (((Monom)m1).get_coefficient() == this.get_coefficient() && ((Monom)m1).get_power() == this.get_power())
+				return true;
+			if (Math.abs(((Monom)m1).get_coefficient() - this.get_coefficient()) <= EPSILON)
+				return true;
+		}
 		return false;
 	}
 

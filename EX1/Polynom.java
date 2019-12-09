@@ -68,7 +68,8 @@ public class Polynom implements Polynom_able{
 
 	@Override
 	public function initFromString(String s) {
-		return null;
+		function new_func = new Polynom(s);
+		return new_func;
 	}
 
 	/**
@@ -164,8 +165,10 @@ public class Polynom implements Polynom_able{
 	 * @param p1 - polynom to check if equals
 	 * @return - boolean
 	 */
-	public boolean equals(Polynom_able p1) {
-		Iterator<Monom> iter = p1.iteretor();
+	public boolean equals(Object p1) {
+		if (!(p1 instanceof function))
+			throw new RuntimeException("not a function");
+		Iterator<Monom> iter = ((Polynom_able) p1).iteretor();
 		Iterator<Monom> iter2 = iteretor();
 		while (iter.hasNext() && iter2.hasNext()) {
 			if (!iter.next().equals(iter2.next()))
@@ -216,12 +219,14 @@ public class Polynom implements Polynom_able{
 	 * this method copy the polynom to new polynom and returns polynom_able
 	 * @return - new  Polynom_able
 	 */
-	public Polynom_able copy() {
-		Polynom polynom_copy = new Polynom();
+	public function copy() {
+		function polynom_copy = new Polynom();
 		Iterator<Monom> iter = iteretor();
 		while (iter.hasNext()){
 			Monom temp = iter.next();
-			polynom_copy.add(new Monom(temp));
+			if (polynom_copy instanceof Polynom_able) {
+				((Polynom_able)polynom_copy).add(new Monom(temp));
+			}
 		}
 		return polynom_copy;
 	}
@@ -282,13 +287,21 @@ public class Polynom implements Polynom_able{
 	 * @param m1 monom to multiply
 	 */
 	public void multiply(Monom m1) {
-		Monom temp = new Monom(1,1);
-		for (int i = 0; i < this.Polynom.size() ; i++) {
-			if (this.Polynom.get(i).get_power() == m1.get_power()) {
-				temp = new Monom(this.Polynom.get(i).get_coefficient()*m1.get_coefficient(),
-						m1.get_power());
-				this.Polynom.set(i , temp);
+		if (m1.get_coefficient() == 0)
+			this.Polynom.clear();
+		if (Polynom.isEmpty()) {
+			Polynom.add(new Monom(m1));
+			return;
+		}
+		Iterator<Monom> it  = iteretor();
+		while (it.hasNext()) {
+			Monom m = it.next();
+			m.multipy(m1);
+			if (m.get_coefficient() == 0){
+				it.remove();
+				return;
 			}
 		}
+		Polynom.sort(mc);
 	}
 }

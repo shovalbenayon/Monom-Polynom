@@ -1,6 +1,7 @@
 package Ex1;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 /** This interface represents a simple function of type y=f(x), where both y and x are real numbers.
 **/
@@ -13,4 +14,5 @@ public interface function extends Serializable{
 	public function initFromString(String s);
 	public function copy(); // clone
 	public boolean equals(Object obj);
+
 }
