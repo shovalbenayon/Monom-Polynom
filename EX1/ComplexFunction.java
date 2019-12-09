@@ -1,5 +1,7 @@
 package Ex1;
 
+import com.sun.deploy.security.SelectableSecurityManager;
+
 import java.util.Stack;
 
 public class ComplexFunction implements complex_function {
@@ -74,8 +76,8 @@ public class ComplexFunction implements complex_function {
      */
     public ComplexFunction(function function_Left) {
         this.left=function_Left;
-        this.op=Operation.None;
         this.right=null;
+        this.op=Operation.None;
     }
 
     /**
@@ -88,6 +90,12 @@ public class ComplexFunction implements complex_function {
         this.right=other.right();
     }
 
+    public ComplexFunction(Operation op, Polynom p1, Polynom p2) {
+        this.op = op;
+        this.left = new ComplexFunction(p1);
+        this.right = new ComplexFunction(p2);
+    }
+
     /**
      * init the complex function with plus operation. if there isn't a right function we wiil add to the right
      * the new function. if there is , a new complex function will be create , that the left side is the original
@@ -95,6 +103,8 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be added to this complex_function.
      */
     public void plus(function f1) {
+        if (this.getOp() == Operation.Error)
+            throw new RuntimeException("ERR: can't resolve error operation");
         /**
          * if there isn't operation it means that we have only left function and then the new function will
          * get in the right side
@@ -107,14 +117,12 @@ public class ComplexFunction implements complex_function {
          * if the operation isn't error or none the algorithm will build new left function with the
          * existing function and adding the new one to the right
          */
-        if(this.getOp() != Operation.Error){
+        else{
             this.left = new ComplexFunction(this);
             this.right = f1;
             this.op = Operation.Plus;
         }
-        else{
-            throw new RuntimeException("ERR: operation is error");
-        }
+
     }
 
     /**
@@ -124,6 +132,8 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be multiply be this complex_function.
      */
     public void mul(function f1) {
+        if (this.getOp() == Operation.Error)
+            throw new RuntimeException("ERR: can't resolve error operation");
         /**
          * if there isn't operation it means that we have only left function and then the new function will
          * get in the right side
@@ -136,13 +146,10 @@ public class ComplexFunction implements complex_function {
          * if the operation isn't error or none the algorithm will build new left function with the
          * existing function and adding the new one to the right
          */
-        if(this.getOp() != Operation.Error){
+        else{
             this.left = new ComplexFunction(this);
             this.right = f1;
             this.op = Operation.Times;
-        }
-        else{
-            throw new RuntimeException("ERR: operation is error");
         }
 
     }
@@ -153,6 +160,8 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be divide be this complex_function.
      */
     public void div(function f1) {
+        if (this.getOp() == Operation.Error)
+            throw new RuntimeException("ERR: can't resolve error operation");
         /**
          * if there isn't operation it means that we have only left function and then the new function will
          * get in the right side
@@ -165,13 +174,10 @@ public class ComplexFunction implements complex_function {
          * if the operation isn't error or none the algorithm will build new left function with the
          * existing function and adding the new one to the right
          */
-        if(this.getOp() != Operation.Error){
+        else{
             this.left = new ComplexFunction(this);
             this.right = f1;
             this.op = Operation.Divid;
-        }
-        else{
-            throw new RuntimeException("ERR: operation is error");
         }
     }
 
@@ -182,6 +188,8 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be compared with this complex_function - to compute the maximum.
      */
     public void max(function f1) {
+        if (this.getOp() == Operation.Error)
+            throw new RuntimeException("ERR: can't resolve error operation");
         /**
          * if there isn't operation it means that we have only left function and then the new function will
          * get in the right side
@@ -194,15 +202,11 @@ public class ComplexFunction implements complex_function {
          * if the operation isn't error or none the algorithm will build new left function with the
          * existing function and adding the new one to the right
          */
-        if(this.getOp() != Operation.Error){
+        else{
             this.left = new ComplexFunction(this);
             this.right = f1;
             this.op = Operation.Max;
         }
-        else{
-            throw new RuntimeException("ERR: operation is error");
-        }
-
     }
 
     /**
@@ -212,6 +216,8 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function which will be compared with this complex_function - to compute the minimum.
      */
     public void min(function f1) {
+        if (this.getOp() == Operation.Error)
+            throw new RuntimeException("ERR: can't resolve error operation");
         /**
          * if there isn't operation it means that we have only left function and then the new function will
          * get in the right side
@@ -224,13 +230,10 @@ public class ComplexFunction implements complex_function {
          * if the operation isn't error or none the algorithm will build new left function with the
          * existing function and adding the new one to the right
          */
-        if(this.getOp() != Operation.Error){
+        else{
             this.left = new ComplexFunction(this);
             this.right = f1;
             this.op = Operation.Min;
-        }
-        else{
-            throw new RuntimeException("ERR: operation is error");
         }
     }
 
@@ -241,6 +244,8 @@ public class ComplexFunction implements complex_function {
      * @param f1 the complex_function
      */
     public void comp(function f1) {
+        if (this.getOp() == Operation.Error)
+            throw new RuntimeException("ERR: can't resolve error operation");
         /**
          * if there isn't operation it means that we have only left function and then the new function will
          * get in the right side
@@ -253,13 +258,10 @@ public class ComplexFunction implements complex_function {
          * if the operation isn't error or none the algorithm will build new left function with the
          * existing function and adding the new one to the right
          */
-        if(this.getOp() != Operation.Error){
+        else{
             this.left = new ComplexFunction(this);
             this.right = f1;
             this.op = Operation.Comp;
-        }
-        else{
-            throw new RuntimeException("ERR: operation is error");
         }
     }
 
@@ -403,5 +405,18 @@ public class ComplexFunction implements complex_function {
             function new_func=this.copy();
             return new_func;
         }
+    }
+    public boolean equals(Object obj) {
+        double x = 0.0;
+        if (obj instanceof function) {
+            while (x < 100) {
+                if (this.f(x) != ((function) obj).f(x))
+                    return false;
+                x += 0.001;
+            }
+        } else {
+            throw new RuntimeException("ERR: Not a function type");
+        }
+        return true;
     }
 }

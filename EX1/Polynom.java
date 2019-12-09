@@ -166,12 +166,18 @@ public class Polynom implements Polynom_able{
 	 * @return - boolean
 	 */
 	public boolean equals(Object p1) {
-		if (!(p1 instanceof function))
-			throw new RuntimeException("not a function");
-		Iterator<Monom> iter = ((Polynom_able) p1).iteretor();
-		Iterator<Monom> iter2 = iteretor();
-		while (iter.hasNext() && iter2.hasNext()) {
-			if (!iter.next().equals(iter2.next()))
+		if (p1 instanceof Polynom) {
+			Iterator<Monom> iter = ((Polynom_able) p1).iteretor();
+			Iterator<Monom> iter2 = iteretor();
+			while (iter.hasNext() && iter2.hasNext()) {
+				if (!iter.next().equals(iter2.next()))
+					return false;
+			}
+		}
+		if (p1 instanceof Monom){
+			Polynom temp = new Polynom();
+			temp.add((Monom) p1);
+			if (!this.equals(temp))
 				return false;
 		}
 		return true;

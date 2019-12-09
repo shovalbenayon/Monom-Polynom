@@ -1,8 +1,6 @@
 package Ex1Testing;
 
-import Ex1.Monom;
-import Ex1.Polynom;
-import Ex1.Polynom_able;
+import Ex1.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -141,8 +139,30 @@ public class PolynomTest {
         }
     }
     @Test
-    public void init(){
+    public void equals_init(){
+        Polynom p1 = new Polynom("3.0x^5");
+        Monom m = new Monom("3.0x^5");
+        if (!p1.equals(m))
+            fail();
 
+        Polynom temp = new Polynom();
+        Polynom equal = new Polynom("2.0x^8-6.0x^7+6.0x^3-x^2+4.0x+14.0");
+        String s = equal.toString();
+        temp.initFromString(s);
+        assertEquals(temp , equal);
+
+        String [] mon = {"4.678x^8" , "-1.0x^7" , "-9x^1" , "0" , "1.0x^0"};
+        Polynom init = new Polynom();
+        for (int i = 0 ; i < mon.length ; i++) {
+            init.initFromString(mon[i]);
+        }
+        Polynom initstring = new Polynom("4.678x^8-1.0x^7-9x^1+0+1.0x^0");
+        assertEquals(init , initstring);
+        function f = new ComplexFunction();
+        s = "4.678x^8-1.0x^7-9x^1+0+1.0x^0";
+        f.initFromString(s);
+        if (!initstring.equals(f))
+            throw new RuntimeException();
     }
 
 }
