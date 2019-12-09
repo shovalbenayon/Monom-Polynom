@@ -1,10 +1,13 @@
 package Ex1;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
 public class Functions_GUI implements functions {
+
+    ArrayList<function> function_gui = new ArrayList<>();
     @Override
     public void initFromFile(String file) throws IOException {
 
@@ -25,69 +28,120 @@ public class Functions_GUI implements functions {
 
     }
 
-    @Override
+    /**
+     * size function
+     * @return the size of this Arraylist
+     */
     public int size() {
-        return 0;
+        return function_gui.size();
     }
 
-    @Override
+    /**
+     * Check if this ArrayList is Empty
+     * @return true, if the ArrayList is Empty, false otherwise
+     */
     public boolean isEmpty() {
+        if (function_gui.size() == 0)
+            return false;
         return false;
     }
 
-    @Override
+    /**
+     * check if the object exist in the Array List
+     * @param o - the receiving object
+     * @return true if the object exist, false otherwise.
+     */
     public boolean contains(Object o) {
-        return false;
+        if (!(o instanceof function))
+            throw new RuntimeException("ERR: not a function type");
+        else{
+            return function_gui.contains(o);
+        }
     }
 
-    @Override
+    /**
+     * Returns an iterator over the elements in this list in proper sequence.
+     * @return iterator
+     */
     public Iterator<function> iterator() {
-        return null;
+        Iterator<function> iter = function_gui.iterator();
+        return iter;
     }
 
-    @Override
+    /**
+     * Returns an array containing all of the elements in this list in proper sequence (from first to last element).
+     * @return Array
+     */
     public Object[] toArray() {
-        return new Object[0];
+        return function_gui.toArray();
     }
 
-    @Override
+    /**
+     * Returns an array containing all of the elements in this list in proper sequence (from first to last element)
+     * the runtime type of the returned array is that of the specified array.
+     * @param a Runtime type
+     * @param <T>
+     * @return Runtime of the array
+     */
     public <T> T[] toArray(T[] a) {
-        return null;
+        return function_gui.toArray(a);
     }
 
-    @Override
+    /**
+     * Add the function to the ArrayList
+     * @param function to Add
+     * @return Boolean if the function added
+     */
     public boolean add(function function) {
-        return false;
+        return function_gui.add(function);
     }
 
-    @Override
+    /**
+     * Removes the first occurrence of the specified element from this list, if it is present.
+     * @param o the object to remove
+     * @return true if the object exist and removed
+     */
     public boolean remove(Object o) {
-        return false;
+        return  function_gui.remove(o);
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        return function_gui.containsAll(c);
     }
 
-    @Override
+    /**
+     * Appends all of the elements in the specified collection to the end of this list,
+     * in the order that they are returned by the specified collection's Iterator.
+     * @param c if the Collection is all added
+     */
     public boolean addAll(Collection<? extends function> c) {
-        return false;
+        return function_gui.addAll(c);
     }
 
-    @Override
+    /**
+     * Removes from this list all of its elements that are contained in the specified collection.
+     * @param c the collection to remove
+     * @return if all the Collection is removed
+     */
     public boolean removeAll(Collection<?> c) {
-        return false;
+        return function_gui.removeAll(c);
     }
 
-    @Override
+    /**
+     * Retains only the elements in this list that are contained in the specified collection.
+     * @param c the Collection to retain
+     * @return if all the Collection is retain
+     */
     public boolean retainAll(Collection<?> c) {
-        return false;
+        return function_gui.retainAll(c);
     }
 
-    @Override
+    /**
+     * clear the array list function_gui
+     */
     public void clear() {
-
+        function_gui.clear();
     }
 
 

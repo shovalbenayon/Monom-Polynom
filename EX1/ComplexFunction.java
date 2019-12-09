@@ -372,18 +372,18 @@ public class ComplexFunction implements complex_function {
      * @return function that represent the string
      */
     public function initFromString(String s) {
-        s = s.replaceAll("\\s", "");
+        s = s.replaceAll("\\s", ""); //remove spaces from the string
         function ans = null;
         int find = s.indexOf('(');
         String op = s.substring(0 , find + 1);
         if (find >= 0 && !op.isEmpty()){
-            int comma_at = main_co(s.substring(op.length() , s.length() -1));
+            int comma_at = main_co(s.substring(op.length() , s.length() -1)); // with this location will know how to splits the function to every side
             function leftf = initFromString(s.substring(op.length() , comma_at + op.length()));
             function rightf = initFromString(s.substring(op.length() + comma_at + 1 , s.length()-1));
             op = s.substring(0 , op.length() - 1);
             ans = new ComplexFunction(op , leftf , rightf);
         }
-        else{
+        else{ //finish to simplify, just polynom to init now
             function temp = new Polynom();
             ans = temp.initFromString(s);
         }
@@ -395,7 +395,7 @@ public class ComplexFunction implements complex_function {
      * @return - new complex function
      */
     public function copy() {
-        if(this instanceof ComplexFunction)
+        if(this instanceof ComplexFunction) //if it's complex function , turn it to function
         {
             function new_func=new ComplexFunction(this);
             return new_func;
@@ -406,6 +406,12 @@ public class ComplexFunction implements complex_function {
             return new_func;
         }
     }
+
+    /**
+     * check if every double this.f(x) == obj.f(x)
+     * @param obj object to equalize
+     * @return true if equals, false otherwise
+     */
     public boolean equals(Object obj) {
         double x = 0.0;
         if (obj instanceof function) {
