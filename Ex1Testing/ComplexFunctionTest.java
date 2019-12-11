@@ -1,16 +1,11 @@
 package Ex1Testing;
 
 import Ex1.ComplexFunction;
-import Ex1.Monom;
 import Ex1.Polynom;
 import Ex1.function;
-import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComplexFunctionTest {
@@ -22,7 +17,8 @@ public class ComplexFunctionTest {
         String init = "mul(div(max(2.0x^7+1.49x^5,plus(8.0x^7-5.6x^2+4.0,3.5x^3-7.509x^2+1.0)),-1.0x^3+7.6x^2),mul(x^9+8.93x^5,-9.39393392x^4+43.0x^2))";
         function temp = new ComplexFunction();
         function init_fun = temp.initFromString(init);
-        assertEquals(init_fun.toString(),init);
+        assertEquals(init_fun.toString(), init);
+
     }
 
     /**
@@ -66,6 +62,11 @@ public class ComplexFunctionTest {
         assertEquals("3.5x^2+4.0x-5.2",cf_comp.left().toString());
         assertEquals("7.0x^5-9.1x^2+1.0",cf_comp.right().toString());
         assertEquals("Comp",cf_comp.getOp().toString());
+
+        ComplexFunction cf_none = new ComplexFunction("none", f1 , null);
+        assertEquals("3.5x^2+4.0x-5.2" , cf_none.left().toString());
+        assertEquals(null , cf_none.right());
+        assertEquals("None", cf_none.getOp().toString());
     }
 
     /**
@@ -100,7 +101,6 @@ public class ComplexFunctionTest {
         function plusfunction = new ComplexFunction(c2);
         ((ComplexFunction) plusfunction).plus(c3);
 
-        System.out.println(plusfunction.toString());
         if (!plusfunction.equals(c1))
             fail("functions should be equals");
     }
@@ -120,7 +120,6 @@ public class ComplexFunctionTest {
         function mulfunction = new ComplexFunction(c2);
         ((ComplexFunction) mulfunction).mul(c3);
 
-        System.out.println(mulfunction.toString());
         if (!mulfunction.equals(c1))
             fail("functions should be equals");
 
@@ -139,7 +138,6 @@ public class ComplexFunctionTest {
         function divfunction = new ComplexFunction(c2);
         ((ComplexFunction) divfunction).div(c3);
 
-        System.out.println(divfunction.toString());
         if (!divfunction.equals(c1))
             fail("functions should be equals");
     }
@@ -156,7 +154,6 @@ public class ComplexFunctionTest {
         function maxfunction = new ComplexFunction(c2);
         ((ComplexFunction) maxfunction).max(c3);
 
-        System.out.println(maxfunction.toString());
         if (!maxfunction.equals(c1))
             fail("functions should be equals");
     }
@@ -174,7 +171,6 @@ public class ComplexFunctionTest {
         function minfunction = new ComplexFunction(c2);
         ((ComplexFunction) minfunction).min(c3);
 
-        System.out.println(minfunction.toString());
         if (!minfunction.equals(c1))
             fail("functions should be equals");
     }
@@ -192,7 +188,6 @@ public class ComplexFunctionTest {
         function compfunction = new ComplexFunction(c2);
         ((ComplexFunction) compfunction).comp(c3);
 
-        System.out.println(compfunction.toString());
         if (!compfunction.equals(c1))
             fail("functions should be equals");
     }

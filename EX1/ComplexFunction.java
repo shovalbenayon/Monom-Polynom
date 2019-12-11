@@ -1,9 +1,5 @@
 package Ex1;
 
-import com.sun.deploy.security.SelectableSecurityManager;
-
-import java.util.Stack;
-
 public class ComplexFunction implements complex_function {
     private function left;
     private function right;
@@ -63,10 +59,49 @@ public class ComplexFunction implements complex_function {
                 this.op = Operation.Comp;
                 break;
             }
+            case "none" :
+                if (function_Left!= null && function_Right == null) {
+                    this.op = Operation.None;
+                    this.left = function_Left;
+                    this.right = null;
+                    break;
+                }
+                if (function_Left != null && function_Right != null){
+                    this.op = Operation.Error;
+                    throw new RuntimeException("ERR : can't get 2 function with none operation");
+                }
+                if (function_Left == null && function_Right != null){
+                    this.op = Operation.Error;
+                    throw new RuntimeException("ERR : can't get right function only");
+                }
+
+                else throw new RuntimeException("ERR : can't get 2 null functions");
             default:
                 System.out.println("ERR : operation is invalid");
                 break;
 
+        }
+    }
+
+    /**
+     * build complex function from strind
+     * @param s
+     */
+    public ComplexFunction (String s) {
+        function f = initFromString(s);
+        if (f instanceof ComplexFunction) {
+            ComplexFunction cf = (ComplexFunction) f;
+            this.left = cf.left;
+            this.right = cf.right;
+            this.op = cf.getOp();
+        }
+        else if ( f instanceof Polynom) {
+            Polynom p = (Polynom) f;
+            this.left = p;
+            this.op = Operation.None;
+        }
+        else {
+            throw new RuntimeException("ERR : the complex function is invaild ");
         }
     }
 
@@ -92,8 +127,8 @@ public class ComplexFunction implements complex_function {
 
     public ComplexFunction(Operation op, Polynom p1, Polynom p2) {
         this.op = op;
-        this.left = new ComplexFunction(p1);
-        this.right = new ComplexFunction(p2);
+        this.left = p1;
+        this.right = p2;
     }
 
     /**
@@ -286,6 +321,7 @@ public class ComplexFunction implements complex_function {
      * @return the string of the complex function
      */
     public String toString(){
+        String ans ;
         String op_string = "";
         switch (this.op) {
             case Max:
@@ -313,7 +349,8 @@ public class ComplexFunction implements complex_function {
                 op_string = "error";
                 break;
         }
-        return op_string+'('+this.left().toString()+','+this.right().toString()+')';
+        ans = op_string+'('+this.left().toString()+','+this.right().toString()+')';
+        return ans;
     }
 
 
@@ -413,14 +450,15 @@ public class ComplexFunction implements complex_function {
      * @return true if equals, false otherwise
      */
     public boolean equals(Object obj) {
-        double x = 0.0;
+        double x = -100;
         if (obj instanceof function) {
             while (x < 100) {
-                if (this.f(x) != ((function) obj).f(x))
+                if (Math.abs(this.f(x)-((function) obj).f(x)) > 0.0001)
                     return false;
                 x += 0.001;
             }
-        } else {
+        }
+        else {
             throw new RuntimeException("ERR: Not a function type");
         }
         return true;
