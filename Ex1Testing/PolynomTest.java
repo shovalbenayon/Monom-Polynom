@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class PolynomTest {
-    
+
     @Test
     public void add_and_sub (){
         String [][] Monoms = {{"4x^2" , "2x^2" , "-3.4x^2" , "-1X^2"},
