@@ -13,6 +13,7 @@ import org.json.simple.parser.ParseException;
 
 public class Functions_GUI implements functions {
     ArrayList<function> function_gui = new ArrayList<>();
+    public static Color[] Colors = {Color.blue, Color.cyan, Color.MAGENTA, Color.ORANGE, Color.red, Color.GREEN, Color.PINK};
 
     /**
      * init the fuction_gui Collection from the file
@@ -89,22 +90,20 @@ public class Functions_GUI implements functions {
         }
         Iterator<function> iter = iterator();
         // plot the approximation to the function
+        int col = 0;
         for (function function : function_gui) {
             double step = ( ( Math.abs(rx.get_min()) ) + ( Math.abs(rx.get_max()) )) / resolution; // resolution drawing
             //random color
-            int Red = (int) (Math.random()*256);
-            int Green = (int) (Math.random()*256);
-            int Blue = (int) (Math.random()*256);
-            Color color_line = new Color (Red , Green , Blue);
-
-            StdDraw.setPenColor(color_line);
+            int c =col%Colors.length;
+            StdDraw.setPenColor(Colors[c]);
+            col++;
             for (double i = rx.get_min(); i < rx.get_max(); i+=step) {
                 StdDraw.line(i, function.f(i), i+step, function.f(i+step));
             }
             // print the color values and the function
             ComplexFunction cf = new ComplexFunction() ;
             function f = cf.initFromString(iter.next().toString());
-            System.out.println(color_line.toString() + "\t" + "f(x) = " + f.toString());
+            System.out.println(Colors[c].toString() + "\t" + "f(x) = " + f.toString());
         }
     }
 
