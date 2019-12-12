@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class PolynomTest {
-
-
+    
     @Test
     public void add_and_sub (){
         String [][] Monoms = {{"4x^2" , "2x^2" , "-3.4x^2" , "-1X^2"},
@@ -31,7 +30,7 @@ public class PolynomTest {
         temp.substract(p2);
         temp.add(t);
         if (!temp.isZero())
-            fail();
+            fail("ERR : polynom should be zero");
     }
     @Test
     public void iszero_mul(){
@@ -53,38 +52,23 @@ public class PolynomTest {
         p1.multiply(y);
 
         if (!p1.isZero())
-            throw new  RuntimeException();
+            fail();
     }
     @Test
     public void area_root(){
         Polynom mp = new Polynom ("0.173x^77+4x^6+3x^0");
         double expected = -1.025390625;
         double actual = mp.root(-30, 30, 0.04);
-        try {
-            assertEquals(expected, actual);
-        }
-        catch (Exception e){
-            fail("expected value is not equal to the root function");
-        }
+        assertEquals(expected, actual);
 
         expected = -1.04296875;
         actual = mp.root(-6, 30, 0.04);
-        try {
-            assertEquals(expected, actual);
-        }
-        catch (Exception e){
-            fail("expected value is not equal to the root function");
-        }
+        assertEquals(expected, actual);
 
         expected = 73.82870541469453;
         Polynom p1 = new Polynom("5x^6+3x^2-4x^4");
         actual = p1.area(0, 2, 0.000001);
-        try {
-            assertEquals(expected, actual);
-        }
-        catch (Exception e){
-            fail("expected value is not equal to the root function");
-        }
+        assertEquals(expected, actual);
 
         Polynom p2 = new Polynom();
         String [] t = {"4x^6", "-5x^5", "1"};
@@ -95,12 +79,8 @@ public class PolynomTest {
 
         expected = 150.28713393240898;
         actual = p2.area(-2, 2, 0.000001);
-        try {
-            assertEquals(expected, actual);
-        }
-        catch (Exception e){
-            fail("expected value is not equal to the root function");
-        }
+        assertEquals(expected, actual);
+
     }
 
     @Test
@@ -116,27 +96,11 @@ public class PolynomTest {
 
         Polynom p_copy = (Polynom)p.copy();
         Polynom q_copy = (Polynom)q.copy();
+        assertEquals(p, p_copy);
 
-        try {
-            assertEquals(p, p_copy);
-        }
-        catch (Exception e){
-            fail("Polynom copy is not equals to the original");
-        }
+        assertEquals(q, q_copy);
+        assertEquals(p, equal);
 
-        try {
-            assertEquals(q, q_copy);
-        }
-        catch (Exception e){
-            fail("Polynom copy is not equals to the original");
-        }
-
-        try {
-            assertEquals(p, equal);
-        }
-        catch (Exception e){
-            fail("Polynom copy is not equals to the original");
-        }
     }
     @Test
     public void equals_init(){
@@ -162,7 +126,7 @@ public class PolynomTest {
         s = "4.678x^8-1.0x^7-9x^1+0+1.0x^0";
         f.initFromString(s);
         if (!initstring.equals(f))
-            throw new RuntimeException();
+            fail();
     }
 
 }

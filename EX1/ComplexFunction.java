@@ -125,10 +125,28 @@ public class ComplexFunction implements complex_function {
         this.right=other.right();
     }
 
+    /**
+     * constructor
+     * @param op - operation
+     * @param p1 - polynom
+     * @param p2 - polynom
+     */
+
     public ComplexFunction(Operation op, Polynom p1, Polynom p2) {
         this.op = op;
         this.left = p1;
         this.right = p2;
+    }
+    /**
+     * constructor
+     * @param op - operation
+     * @param f1 - function
+     * @param f2 - function
+     */
+    public ComplexFunction(Operation op, function f1, function f2) {
+        this.op = op;
+        this.left = f1;
+        this.right = f2;
     }
 
     /**
@@ -321,6 +339,7 @@ public class ComplexFunction implements complex_function {
      * @return the string of the complex function
      */
     public String toString(){
+
         String ans ;
         String op_string = "";
         switch (this.op) {
@@ -410,10 +429,10 @@ public class ComplexFunction implements complex_function {
      */
     public function initFromString(String s) {
         s = s.replaceAll("\\s", ""); //remove spaces from the string
-        function ans = null;
+        function ans = new ComplexFunction();
         int find = s.indexOf('(');
         String op = s.substring(0 , find + 1);
-        if (find >= 0 && !op.isEmpty()){
+        if (find >= 0 && !op.isEmpty() ){
             int comma_at = main_co(s.substring(op.length() , s.length() -1)); // with this location will know how to splits the function to every side
             function leftf = initFromString(s.substring(op.length() , comma_at + op.length()));
             function rightf = initFromString(s.substring(op.length() + comma_at + 1 , s.length()-1));

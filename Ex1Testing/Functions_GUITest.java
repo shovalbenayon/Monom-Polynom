@@ -1,5 +1,6 @@
 package Ex1Testing;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,79 +14,78 @@ import Ex1.Polynom;
 import Ex1.Range;
 import Ex1.function;
 import Ex1.functions;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * Note: minor changes (thanks to Amichai!!)
  * The use of "get" was replaced by iterator!
- * 
+ *
  * Partial JUnit + main test for the GUI_Functions class, expected output from the main:
  * 0) java.awt.Color[r=0,g=0,b=255]  f(x)= plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0)
-1) java.awt.Color[r=0,g=255,b=255]  f(x)= plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)
-2) java.awt.Color[r=255,g=0,b=255]  f(x)= div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)
-3) java.awt.Color[r=255,g=200,b=0]  f(x)= -1.0x^4 +2.4x^2 +3.1
-4) java.awt.Color[r=255,g=0,b=0]  f(x)= +0.1x^5 -1.2999999999999998x +5.0
-5) java.awt.Color[r=0,g=255,b=0]  f(x)= max(max(max(max(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)),div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)),-1.0x^4 +2.4x^2 +3.1),+0.1x^5 -1.2999999999999998x +5.0)
-6) java.awt.Color[r=255,g=175,b=175]  f(x)= min(min(min(min(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)),div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)),-1.0x^4 +2.4x^2 +3.1),+0.1x^5 -1.2999999999999998x +5.0)
+ 1) java.awt.Color[r=0,g=255,b=255]  f(x)= plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)
+ 2) java.awt.Color[r=255,g=0,b=255]  f(x)= div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)
+ 3) java.awt.Color[r=255,g=200,b=0]  f(x)= -1.0x^4 +2.4x^2 +3.1
+ 4) java.awt.Color[r=255,g=0,b=0]  f(x)= +0.1x^5 -1.2999999999999998x +5.0
+ 5) java.awt.Color[r=0,g=255,b=0]  f(x)= max(max(max(max(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)),div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)),-1.0x^4 +2.4x^2 +3.1),+0.1x^5 -1.2999999999999998x +5.0)
+ 6) java.awt.Color[r=255,g=175,b=175]  f(x)= min(min(min(min(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),plus(div(+1.0x +1.0,mul(mul(+1.0x +3.0,+1.0x -2.0),+1.0x -4.0)),2.0)),div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0),-1.0x^4 +2.4x^2 +3.1)),-1.0x^4 +2.4x^2 +3.1),+0.1x^5 -1.2999999999999998x +5.0)
 
  * @author boaz_benmoshe
  *
  */
 class Functions_GUITest {
-	public static void main(String[] a) {
-		functions data = FunctionsFactory();
-	//	int w=1000, h=600, res=200;
-	//	Range rx = new Range(-10,10);
-	//	Range ry = new Range(-5,15);
-//		data.drawFunctions(w,h,rx,ry,res);
-		String file = "function_file.txt";
-		String file2 = "function_file2.txt";
-		try {
-			data.saveToFile(file);
-			Functions_GUI data2 = new Functions_GUI();
-			data2.initFromFile(file);
-			data.saveToFile(file2);
-		}
-		catch(Exception e) {e.printStackTrace();}
-		
-		String JSON_param_file = "GUI_params.txt";
-		data.drawFunctions(JSON_param_file);
-	}
 	private functions _data=null;
-//	@BeforeAll
-//	static void setUpBeforeClass() throws Exception {
-//	}
 
 	@BeforeEach
 	void setUp() throws Exception {
 		_data = FunctionsFactory();
 	}
 
-	//@Test
+	@Test
 	void testFunctions_GUI() {
-	//	fail("Not yet implemented");
+		Functions_GUI f = new Functions_GUI();
+		ComplexFunction cf = new ComplexFunction();
+		f.add(cf.initFromString("-4x^5+7x^3-1.22229"));
+		f.add(cf.initFromString("plus(-4x^5+7x^3-1.22229, 2x^9-8x^7)"));
+		f.add(cf.initFromString("div(plus(-4x^5+7x^3-1.22229, 2x^9-8x^7),6x^5)"));
+		f.add(cf.initFromString("mul(div(plus(-4x^5+7x^3-1.22229, 2x^9-8x^7),6x^5), 4.555x^5)"));
+
+		assertEquals(f.size() , 4);
 	}
 
-	//@Test
-	void testInitFromFile() {
-	//	fail("Not yet implemented");
+	@Test
+	void testInitFromFile() throws IOException {
+		Functions_GUI data2 = (Functions_GUI) FunctionsFactory();;
+		String file = "function_file.txt";
+		data2.initFromFile(file);
 	}
 
-	//@Test
+	@Test
 	void testSaveToFile() {
-		
-		
+		functions data = FunctionsFactory();
+		String file = "function_file.txt";
+
+		try {
+			data.saveToFile(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	//@Test
+	@Test
 	void testDrawFunctions() {
-		//_data.drawFunctions();
-	//	fail("Not yet implemented");
+		int w=1000, h=600, res=500;
+		Range rx = new Range(-10,10);
+		Range ry = new Range(-5,15);
+		_data.drawFunctions(w,h,rx,ry,res);
 	}
 
 	@Test
 	void testDrawFunctionsIntIntRangeRangeInt() {
-		_data.drawFunctions("GUI_params.txt");
-		//fail("Not yet implemented");
+		String JSON_param_file = "C:/Users/shova/IdeaProjects/objectoriented/src/GUI_params.txt";
+		_data.drawFunctions(JSON_param_file);
 	}
+
 	public static functions FunctionsFactory() {
 		functions ans = new Functions_GUI();
 		String s1 = "3.1 +2.4x^2 -x^4";
@@ -98,7 +98,7 @@ class Functions_GUITest {
 		for(int i=1;i<s3.length;i++) {
 			cf3.mul(new Polynom(s3[i]));
 		}
-		
+
 		ComplexFunction cf = new ComplexFunction(Operation.Plus, p1,p2);
 		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x +1"),cf3);
 		cf4.plus(new Monom("2"));
@@ -121,7 +121,7 @@ class Functions_GUITest {
 			min.min(f);
 		}
 		ans.add(max);
-		ans.add(min);		
+		ans.add(min);
 		return ans;
 	}
 }

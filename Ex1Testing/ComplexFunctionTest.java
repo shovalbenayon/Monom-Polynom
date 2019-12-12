@@ -10,14 +10,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComplexFunctionTest {
 
-
-
     @Test
     public void initFromStringtest() {
         String init = "mul(div(max(2.0x^7+1.49x^5,plus(8.0x^7-5.6x^2+4.0,3.5x^3-7.509x^2+1.0)),-1.0x^3+7.6x^2),mul(x^9+8.93x^5,-9.39393392x^4+43.0x^2))";
         function temp = new ComplexFunction();
         function init_fun = temp.initFromString(init);
         assertEquals(init_fun.toString(), init);
+
+        init = "-1.0x^4+2.4x^2+3.1";
+        function t = new ComplexFunction();
+        function init_t = temp.initFromString(init);
+        assertEquals(init_t.toString(), init);
 
     }
 

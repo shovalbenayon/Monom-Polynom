@@ -58,6 +58,8 @@ public class Monom implements function{
 	 * @param s - the string we will convert in to monom
 	 */
 	public Monom(String s) {
+		if (s.equals(""))
+			return;
 		s = s.toLowerCase();
 		if (!s.contains("x")) {
 			if (!isNumeric(s))
